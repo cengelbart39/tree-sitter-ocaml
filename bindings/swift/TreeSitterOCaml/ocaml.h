@@ -1,12 +1,17 @@
-//
-//  Header.h
-//  
-//
-//  Created by Christopher Engelbart on 5/25/23.
-//
+#ifndef TREE_SITTER_OCAML_H_
+#define TREE_SITTER_OCAML_H_
 
-#ifndef Header_h
-#define Header_h
+typedef struct TSLanguage TSLanguage;
 
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-#endif /* Header_h */
+extern TSLanguage *tree_sitter_ocaml();
+extern TSLanguage *tree_sitter_ocaml_interface();
+
+#ifdef __cplusplus
+}
+#endif
+
+#endif // TREE_SITTER_OCAML_H_

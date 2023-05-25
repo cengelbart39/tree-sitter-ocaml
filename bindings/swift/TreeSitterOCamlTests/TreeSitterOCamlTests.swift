@@ -1,35 +1,50 @@
 //
 //  TreeSitterOCamlTests.swift
-//  
+//
 //
 //  Created by Christopher Engelbart on 5/25/23.
 //
 
 import XCTest
+@testable import TreeSitterOcaml
+import SwiftTreeSitter
 
 final class TreeSitterOCamlTests: XCTestCase {
 
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    func testOCaml() throws {
+        let language = Language(language: tree_sitter_ocaml())
+        
+        let parser = Parser()
+        try parser.setLanguage(language)
+        
+        let source = """
+        module M = struct
+            let x = 0
+        end
+        """
+        
+        let tree = try XCTUnwrap(parser.parse(source))
+        let root = try XCTUnwrap(tree.rootNode)
+        
+        XCTAssertFalse(root.hasError)
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    func testOCamlInterface() throws {
+        let language = Language(language: tree_sitter_ocaml_interface())
+        
+        let parser = Parser()
+        try parser.setLanguage(language)
+        
+        let source = """
+        module M : sig
+            val x : int
+        end
+        """
+        
+        let tree = try XCTUnwrap(parser.parse(source))
+        let root = try XCTUnwrap(tree.rootNode)
+        
+        XCTAssertFalse(root.hasError)
     }
 
 }
